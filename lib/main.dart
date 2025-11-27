@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:fluttertoast/fluttertoast.dart';
 import 'package:get_x/get_core/get_core.dart';
 import 'package:get_x/instance_manager.dart';
@@ -15,6 +16,9 @@ void main() async {
   // Get.lazyPut(() => Empcontroller(),);
 
   WidgetsFlutterBinding.ensureInitialized();
+  await dotenv.load(fileName: "assest/.env");
+  final secKey = dotenv.env['SECRET_KEY'];
+  print("sdsasd ==> ${secKey}");
   var dir = await getApplicationDocumentsDirectory();
   print("the app directory is $dir");
   objectBox = await objectboxInitialize.init();
@@ -29,7 +33,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       title: 'Flutter Demo',
-      
+
       theme: ThemeData(
         // This is the theme of your application.
         //
