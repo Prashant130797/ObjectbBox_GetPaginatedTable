@@ -7,14 +7,13 @@ import 'package:object_box_project/Getx_Pagination/Empcontroller.dart';
 import 'package:object_box_project/Getx_Pagination/PaginatedUI.dart';
 import 'package:object_box_project/ObjectBoxCrud/UserModelOperation.dart';
 import 'package:object_box_project/ObjectBoxModel/DataMainmodel.dart';
-import 'package:object_box_project/ObjectBoxModel/UserModel.dart';
+import 'package:object_box_project/Models/UserModel.dart';
 import 'package:path_provider/path_provider.dart';
 
 late objectboxInitialize objectBox;
 
 void main() async {
   // Get.lazyPut(() => Empcontroller(),);
-
   WidgetsFlutterBinding.ensureInitialized();
   await dotenv.load(fileName: "assest/.env");
   final secKey = dotenv.env['SECRET_KEY'];

@@ -14,7 +14,8 @@ import 'package:objectbox/internal.dart'
 import 'package:objectbox/objectbox.dart' as obx;
 import 'package:objectbox_flutter_libs/objectbox_flutter_libs.dart';
 
-import 'ObjectBoxModel/UserModel.dart';
+import 'Models/EmpModel.dart';
+import 'Models/UserModel.dart';
 
 export 'package:objectbox/objectbox.dart'; // so that callers only have to import this file
 
@@ -41,6 +42,34 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(3, 9135707403169467237),
         name: 'age',
         type: 9,
+        flags: 0,
+      ),
+    ],
+    relations: <obx_int.ModelRelation>[],
+    backlinks: <obx_int.ModelBacklink>[],
+  ),
+  obx_int.ModelEntity(
+    id: const obx_int.IdUid(3, 7046673977554198444),
+    name: 'Employee',
+    lastPropertyId: const obx_int.IdUid(3, 2261069814082374589),
+    flags: 0,
+    properties: <obx_int.ModelProperty>[
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(1, 386715901323792055),
+        name: 'id',
+        type: 6,
+        flags: 1,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(2, 1342610666571771597),
+        name: 'empName',
+        type: 9,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(3, 2261069814082374589),
+        name: 'empAge',
+        type: 6,
         flags: 0,
       ),
     ],
@@ -87,13 +116,17 @@ Future<obx.Store> openStore({
 obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
-    lastEntityId: const obx_int.IdUid(1, 2378425773364852577),
+    lastEntityId: const obx_int.IdUid(3, 7046673977554198444),
     lastIndexId: const obx_int.IdUid(0, 0),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
-    retiredEntityUids: const [],
+    retiredEntityUids: const [5810355649692258107],
     retiredIndexUids: const [],
-    retiredPropertyUids: const [],
+    retiredPropertyUids: const [
+      7284066298156057898,
+      7421408905415698215,
+      5610257767345918928,
+    ],
     retiredRelationUids: const [],
     modelVersion: 5,
     modelVersionParserMinimum: 5,
@@ -139,6 +172,50 @@ obx_int.ModelDefinition getObjectBoxModel() {
         return object;
       },
     ),
+    Employee: obx_int.EntityDefinition<Employee>(
+      model: _entities[1],
+      toOneRelations: (Employee object) => [],
+      toManyRelations: (Employee object) => {},
+      getId: (Employee object) => object.id,
+      setId: (Employee object, int id) {
+        object.id = id;
+      },
+      objectToFB: (Employee object, fb.Builder fbb) {
+        final empNameOffset = fbb.writeString(object.empName);
+        fbb.startTable(4);
+        fbb.addInt64(0, object.id);
+        fbb.addOffset(1, empNameOffset);
+        fbb.addInt64(2, object.empAge);
+        fbb.finish(fbb.endTable());
+        return object.id;
+      },
+      objectFromFB: (obx.Store store, ByteData fbData) {
+        final buffer = fb.BufferContext(fbData);
+        final rootOffset = buffer.derefObject(0);
+        final idParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          4,
+          0,
+        );
+        final empAgeParam = const fb.Int64Reader().vTableGet(
+          buffer,
+          rootOffset,
+          8,
+          0,
+        );
+        final empNameParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 6, '');
+        final object = Employee(
+          id: idParam,
+          empAge: empAgeParam,
+          empName: empNameParam,
+        );
+
+        return object;
+      },
+    ),
   };
 
   return obx_int.ModelDefinition(model, bindings);
@@ -159,5 +236,23 @@ class Usermodel_ {
   /// See [Usermodel.age].
   static final age = obx.QueryStringProperty<Usermodel>(
     _entities[0].properties[2],
+  );
+}
+
+/// [Employee] entity fields to define ObjectBox queries.
+class Employee_ {
+  /// See [Employee.id].
+  static final id = obx.QueryIntegerProperty<Employee>(
+    _entities[1].properties[0],
+  );
+
+  /// See [Employee.empName].
+  static final empName = obx.QueryStringProperty<Employee>(
+    _entities[1].properties[1],
+  );
+
+  /// See [Employee.empAge].
+  static final empAge = obx.QueryIntegerProperty<Employee>(
+    _entities[1].properties[2],
   );
 }

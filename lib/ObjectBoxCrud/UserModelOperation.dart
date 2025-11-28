@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:object_box_project/ObjectBoxModel/DataMainmodel.dart';
-import 'package:object_box_project/ObjectBoxModel/UserModel.dart';
+import 'package:object_box_project/Models/UserModel.dart';
 import 'package:object_box_project/main.dart';
 import 'package:object_box_project/objectbox.g.dart';
 

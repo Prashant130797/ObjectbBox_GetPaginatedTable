@@ -26,17 +26,47 @@
         }
       ],
       "relations": []
+    },
+    {
+      "id": "3:7046673977554198444",
+      "lastPropertyId": "3:2261069814082374589",
+      "name": "Employee",
+      "properties": [
+        {
+          "id": "1:386715901323792055",
+          "name": "id",
+          "type": 6,
+          "flags": 1
+        },
+        {
+          "id": "2:1342610666571771597",
+          "name": "empName",
+          "type": 9
+        },
+        {
+          "id": "3:2261069814082374589",
+          "name": "empAge",
+          "type": 6
+        }
+      ],
+      "relations": []
     }
   ],
-  "lastEntityId": "1:2378425773364852577",
+  "lastEntityId": "3:7046673977554198444",
   "lastIndexId": "0:0",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
-  "retiredEntityUids": [],
+  "retiredEntityUids": [
+    5810355649692258107
+  ],
   "retiredIndexUids": [],
-  "retiredPropertyUids": [],
+  "retiredPropertyUids": [
+    7284066298156057898,
+    7421408905415698215,
+    5610257767345918928
+  ],
   "retiredRelationUids": [],
   "version": 1
 }
